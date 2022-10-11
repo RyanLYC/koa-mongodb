@@ -28,7 +28,7 @@ app.use(handleResponse());
 
 //中间件配置公共的信息
 app.use(async (ctx, next) => {
-  ctx.state.userinfo = "RyanLyc";
+  ctx.state.userName = "RyanLyc";
   await next(); /*继续向下匹配路由*/
 });
 
