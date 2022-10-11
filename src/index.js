@@ -17,6 +17,7 @@ app.use(KoaStatic(path.join(__dirname, "/public")));
 // ejs
 // app.use(views(__dirname + '/views', {map: {html: 'ejs'}})) 这种方式文件名得写.html
 app.use(views(__dirname + "/views", { extension: "ejs" })); //这种写.ejs
+// art-template高性能模板引擎
 
 app.use(
   KoaBody({
