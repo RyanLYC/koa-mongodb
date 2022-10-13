@@ -1,7 +1,9 @@
 import { initTestRoute } from "./test";
+import { initUserInfoRoute } from "./userInfo";
 
 export function initGlobalRoute(router) {
   initTestRoute(router);
+  initUserInfoRoute(router);
 
   router.get("/", async (ctx) => {
     ctx.cookies.set("userinfo", "lyc", {
