@@ -8,6 +8,9 @@ import KoaBody from "koa-body";
 const KoaStatic = require("koa-static");
 const views = require("koa-views");
 
+import MgDb from "./mongoose";
+MgDb.getInstance().connect();
+
 const app = new Koa();
 const router = new Router();
 // 静态资源的配置
