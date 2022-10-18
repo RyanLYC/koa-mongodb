@@ -1,4 +1,4 @@
-const fs = require("fs");
+import fs from "fs";
 /*
 自动读取文件模块
 */
