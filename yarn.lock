@@ -1813,6 +1813,14 @@ koa-convert@^2.0.0:
     co "^4.6.0"
     koa-compose "^4.1.0"
 
+koa-json-error@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.npmmirror.com/koa-json-error/-/koa-json-error-3.1.2.tgz#acad750c6739cb12cc4ea6c25f224d59b765abfe"
+  integrity sha512-nqfNwD4W+hYaJijFl+6qNSQJHbTS4vp+gXTdXl5U8YK2PVNzCF0HnLZwyKHaMeBebhanAgmfheQv96wLDjLRxg==
+  dependencies:
+    lodash.compact "^3.0.1"
+    lodash.curry "^4.1.1"
+
 koa-send@^5.0.0:
   version "5.0.1"
   resolved "https://registry.npmmirror.com/koa-send/-/koa-send-5.0.1.tgz#39dceebfafb395d0d60beaffba3a70b4f543fe79"
@@ -1871,6 +1879,16 @@ koa@^2.13.4:
     statuses "^1.5.0"
     type-is "^1.6.16"
     vary "^1.1.2"
+
+lodash.compact@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npmmirror.com/lodash.compact/-/lodash.compact-3.0.1.tgz#540ce3837745975807471e16b4a2ba21e7256ca5"
+  integrity sha512-2ozeiPi+5eBXW1CLtzjk8XQFhQOEMwwfxblqeq6EGyTxZJ1bPATqilY0e6g2SLQpP4KuMeuioBhEnWz5Pr7ICQ==
+
+lodash.curry@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.npmmirror.com/lodash.curry/-/lodash.curry-4.1.1.tgz#248e36072ede906501d75966200a86dab8b23170"
+  integrity sha512-/u14pXGviLaweY5JI0IUzgzF2J6Ne8INyzAZjImcryjgkZ+ebruBxy2/JaOOkTqScddcYtakjhSaeemV8lR0tA==
 
 lodash@^4.17.4:
   version "4.17.21"

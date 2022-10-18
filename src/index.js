@@ -7,6 +7,9 @@ import KoaBody from "koa-body";
 // 第三方中间件
 const KoaStatic = require("koa-static");
 const views = require("koa-views");
+/** 错误处理中间件 */
+const _ = require("lodash");
+import error from "koa-json-error";
 
 import MgDb from "./mongoose";
 MgDb.getInstance().connect();
@@ -49,6 +52,14 @@ app.use(views(__dirname + "/views", { extension: "ejs" })); //这种写.ejs
 // 3、session 会在一定时间内保存在服务器上。当访问增多，会比较占用你服务器的性能
 // 考虑到减轻服务器性能方面，应当使用 COOKIE。
 // 4、单个 cookie 保存的数据不能超过 4K，很多浏览器都限制一个站点最多保存 20 个 cookie
+
+app.use(
+  error({
+    // Avoid showing the stacktrace in 'production' env
+    postFormat: (e, obj) =>
+      process.env.NODE_ENV === "production" ? _.omit(obj, "stack") : obj,
+  })
+); // 必须配置在路由的上面
 
 app.use(
   KoaBody({

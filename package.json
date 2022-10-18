@@ -5,8 +5,8 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "dev": "SET NODE_ENV=development && nodemon ./src/index.js --exec babel-node",
-    "build": "SET NODE_ENV=production && node ./src/index.js"
+    "dev": "cross-env NODE_ENV=development  nodemon ./src/index.js --exec babel-node",
+    "build": "cross-env NODE_ENV=production node ./src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +16,7 @@
     "ejs": "^3.1.8",
     "koa": "^2.13.4",
     "koa-body": "^5.0.0",
+    "koa-json-error": "^3.1.2",
     "koa-static": "^5.0.0",
     "koa-views": "^8.0.0",
     "mongoose": "^6.6.5",
