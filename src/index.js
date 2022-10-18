@@ -66,4 +66,4 @@ app.use(async (ctx, next) => {
 
 routing(app);
 
-app.listen(3000);
+app.listen(3000, () => console.log("程序启动在3000端口"));

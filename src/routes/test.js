@@ -1,14 +1,14 @@
 import Router from "@koa/router";
-import * as controller from "../controller/test";
+import { testGet, testGet2, testPost, userGet } from "../controllers/test";
 
 const router = new Router();
 
 /**路由中间件*/
-router.get("/test", controller.testGet);
-router.get("/test", controller.testGet2);
-router.post("/test", controller.testPost);
+router.get("/test", testGet);
+router.get("/test", testGet2);
+router.post("/test", testPost);
 //请求方式 http://域名/user/123
-router.get("/user/:id", controller.userGet);
+router.get("/user/:id", userGet);
 
 router.get("/", async (ctx) => {
   ctx.cookies.set("userinfo", "lyc", {

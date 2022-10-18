@@ -1,10 +1,10 @@
 import Router from "@koa/router";
-import * as controller from "../controller/userInfo";
+import { save, update, del } from "../controllers/userInfo";
 
 const router = new Router({ prefix: "/userInfo" });
 
-router.post("/save", controller.save);
-router.post("/update", controller.update);
-router.post("/delete", controller.del);
+router.post("/save", save);
+router.post("/update", update);
+router.post("/delete", del);
 
 module.exports = router;
