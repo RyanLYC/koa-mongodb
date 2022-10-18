@@ -1,28 +1,17 @@
-import { initTestRoute } from "./test";
-import { initUserInfoRoute } from "./userInfo";
+const fs = require("fs");
+/*
+自动读取文件模块
+*/
+module.exports = (app) => {
+  // 同步读取文件
+  fs.readdirSync(__dirname).forEach((file) => {
+    if (file === "index.js") {
+      return;
+    }
 
-export function initGlobalRoute(router) {
-  initTestRoute(router);
-  initUserInfoRoute(router);
-
-  router.get("/", async (ctx) => {
-    ctx.cookies.set("userinfo", "lyc", {
-      maxAge: 60 * 1000 * 60,
-      // path:'/abc',  /*配置可以访问的页面*/
-      // domain:'.baidu.com'  /*正常情况不要设置 默认就是当前域下面的所有页面都可以方法*/
-
-      httpOnly: false, //true表示这个cookie只有服务器端可以访问，false表示客户端（js），服务器端都可以访问
-      /*
-          a.baidu.com
-          b.baidu.com  共享cookie的数据
-      * */
-      // koa中没法直接设置中文的cookie
-    });
-    //  var userinfo = ctx.cookies.get('userinfo');
-
-    let title = "ejs: Hi ";
-    await ctx.render("index", {
-      title: title,
-    });
+    const route = require(`./${file}`);
+    /**在加了router.allowedMethods()中间件情况下，如果接口是get请求，而前端使用post请求，会返回405 Method Not Allowed ，提示方法不被允许 ，并在响应头有添加允许的请求方式；而在不加这个中间件这种情况下，则会返回 404 Not Found找不到请求地址，并且响应头没有添加允许的请求方式 。 */
+    // 注册路由 响应options
+    app.use(route.routes()).use(route.allowedMethods());
   });
-}
+};

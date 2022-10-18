@@ -41,7 +41,7 @@ export async function del(ctx, next) {
   const { id } = ctx.request.body;
 
   try {
-    await services.deleteById(id);
+    console.log(await services.deleteById(id));
     ctx.state.response = {
       code: RESPONSE_CODE.success,
       data: null,
