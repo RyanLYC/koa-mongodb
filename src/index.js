@@ -10,6 +10,7 @@ const views = require("koa-views");
 /** 错误处理中间件 */
 const _ = require("lodash");
 import error from "koa-json-error";
+import parameter from "koa-parameter";
 
 import MgDb from "./mongoose";
 MgDb.getInstance().connect();
@@ -75,6 +76,7 @@ app.use(async (ctx, next) => {
   await next(); /*继续向下匹配路由*/
 });
 
+app.use(parameter(app));
 routing(app);
 
 app.listen(3000, () => console.log("程序启动在3000端口"));

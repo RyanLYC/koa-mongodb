@@ -4,6 +4,10 @@ import { RESPONSE_CODE } from "../constant";
 class UserInfoCtl {
   async save(ctx, next) {
     // a.b;
+    ctx.verifyParams({
+      usertName: { type: "string", required: true },
+      age: { type: "number", required: true },
+    });
     const requestBody = ctx.request.body;
 
     try {

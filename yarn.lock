@@ -1821,6 +1821,13 @@ koa-json-error@^3.1.2:
     lodash.compact "^3.0.1"
     lodash.curry "^4.1.1"
 
+koa-parameter@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npmmirror.com/koa-parameter/-/koa-parameter-3.0.1.tgz#b0645f2412eadb79d3a1808d17ed30824a54c887"
+  integrity sha512-lkQBeLjO1Se7rGCj3DaHjUDDaT2rKNlxqX901X6b41/sAHpErxMj8c9eFuFbn7BzjZNvxS1c+uCtHJSOoeMldQ==
+  dependencies:
+    parameter "^2.2.0"
+
 koa-send@^5.0.0:
   version "5.0.1"
   resolved "https://registry.npmmirror.com/koa-send/-/koa-send-5.0.1.tgz#39dceebfafb395d0d60beaffba3a70b4f543fe79"
@@ -2242,6 +2249,11 @@ output-file-sync@^1.1.2:
     graceful-fs "^4.1.4"
     mkdirp "^0.5.1"
     object-assign "^4.1.0"
+
+parameter@^2.2.0:
+  version "2.4.0"
+  resolved "https://registry.npmmirror.com/parameter/-/parameter-2.4.0.tgz#85ea52e9dfee80265a07b086edbc352e68b39733"
+  integrity sha512-PxENY9SO4qYIBRUXJ7dM/nWxbzC4PIDws1U7IQsZ0tlZvrcuAKxJQZV6Jf0Lmpl1mSYaEPcvhMOL2UHtLU2Xtw==
 
 parse-glob@^3.0.4:
   version "3.0.4"

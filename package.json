@@ -17,6 +17,7 @@
     "koa": "^2.13.4",
     "koa-body": "^5.0.0",
     "koa-json-error": "^3.1.2",
+    "koa-parameter": "^3.0.1",
     "koa-static": "^5.0.0",
     "koa-views": "^8.0.0",
     "mongoose": "^6.6.5",
