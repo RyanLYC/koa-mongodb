@@ -1,6 +1,6 @@
 import Koa from "koa";
 import path from "path";
-import Router from "@koa/router";
+// import Router from "@koa/router";
 import routing from "./routes";
 import { handleResponse } from "./middleware";
 import KoaBody from "koa-body";
@@ -8,7 +8,6 @@ import KoaBody from "koa-body";
 const KoaStatic = require("koa-static");
 const views = require("koa-views");
 /** 错误处理中间件 */
-const _ = require("lodash");
 import error from "koa-json-error";
 import parameter from "koa-parameter";
 
@@ -16,7 +15,7 @@ import MgDb from "./mongoose";
 MgDb.getInstance().connect();
 
 const app = new Koa();
-const router = new Router();
+// const router = new Router();
 // 静态资源的配置
 app.use(KoaStatic(path.join(__dirname, "/static")));
 app.use(KoaStatic(path.join(__dirname, "/public")));
@@ -58,7 +57,16 @@ app.use(
   error({
     // Avoid showing the stacktrace in 'production' env
     postFormat: (e, obj) =>
-      process.env.NODE_ENV === "production" ? _.omit(obj, "stack") : obj,
+      process.env.NODE_ENV === "production"
+        ? {
+            code: obj.status,
+            data: obj.message,
+          }
+        : {
+            code: obj.status,
+            data: obj.message,
+            stack: obj.stack,
+          },
   })
 ); // 必须配置在路由的上面
 

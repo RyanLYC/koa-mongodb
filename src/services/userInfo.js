@@ -1,4 +1,4 @@
-import UserInfo from "../model/userInfo";
+import UserInfo from "../models/userInfo";
 class UserInfoSvc {
   save(params) {
     return new UserInfo(params).save();
