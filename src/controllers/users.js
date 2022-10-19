@@ -66,11 +66,14 @@ class UserCtl {
 
         合起来：返回第二页
         */
-    ctx.body = await User
-      // 实现话题的模糊搜索
-      .find({ name: new RegExp(ctx.query.q) })
-      .limit(perPage)
-      .skip(pageNo * perPage);
+    ctx.state.response = {
+      code: RESPONSE_CODE.success,
+      data: await User
+        // 实现话题的模糊搜索
+        .find({ name: new RegExp(ctx.query.q) })
+        .limit(perPage)
+        .skip(pageNo * perPage),
+    };
   }
 }
 
