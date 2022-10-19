@@ -50,7 +50,7 @@ class UserCtl {
     // 返回给客户端
     ctx.state.response = {
       code: RESPONSE_CODE.success,
-      data: { token },
+      data: { token, id: _id },
     };
   }
 
@@ -73,6 +73,42 @@ class UserCtl {
         .find({ name: new RegExp(ctx.query.q) })
         .limit(perPage)
         .skip(pageNo * perPage),
+    };
+  }
+
+  /**判断是否有权限的中间件 */
+  async checkOwner(ctx, next) {
+    if (ctx.request.body.id !== ctx.state.user._id) {
+      ctx.throw(403, "没有权限操作");
+    }
+    await next();
+  }
+
+  /**修改用户 */
+  async update(ctx) {
+    ctx.verifyParams({
+      id: { type: "string", required: true },
+      name: { type: "string", required: false },
+      password: { type: "string", required: false },
+      avatar_url: { type: "string", required: false },
+      gender: { type: "string", required: false },
+      headline: { type: "string", required: false },
+      locations: { type: "array", itemType: "string", required: false },
+      business: { type: "string", required: false },
+      employments: { type: "array", itemType: "object", required: false },
+      educations: { type: "array", itemType: "object", required: false },
+    });
+
+    const user = await User.findByIdAndUpdate(
+      ctx.request.body.id,
+      ctx.request.body
+    );
+    if (!user) {
+      ctx.throw(404, "修改用户失败");
+    }
+    ctx.state.response = {
+      code: RESPONSE_CODE.success,
+      data: "修改用户成功",
     };
   }
 }

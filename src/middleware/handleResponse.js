@@ -3,6 +3,13 @@ import { RESPONSE_CODE } from "../constant";
 export function handleResponse() {
   return async function (ctx, next) {
     await next();
+    if (ctx.body !== undefined && ctx.body.errors) {
+      ctx.state.response = {
+        code: RESPONSE_CODE.error,
+        data: ctx.body.errors,
+        msg: ctx.body.message,
+      };
+    }
     if (ctx.state.response === undefined) {
       return;
     }
@@ -14,12 +21,9 @@ export function handleResponse() {
 function getResult(code, data, msg) {
   const result = {
     code,
-    data: null,
+    data,
     msg: undefined,
   };
-  if (code === RESPONSE_CODE.success) {
-    result.data = data;
-  }
 
   if (code === RESPONSE_CODE.error) {
     result.msg = msg;

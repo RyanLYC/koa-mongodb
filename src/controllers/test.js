@@ -2,6 +2,7 @@ import { RESPONSE_CODE } from "../constant";
 
 class TestCtl {
   testGet(ctx, next) {
+    // a.b;
     console.log("testGet:", 1);
     next();
   }

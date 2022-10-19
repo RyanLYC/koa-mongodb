@@ -9,8 +9,8 @@ const KoaStatic = require("koa-static");
 const views = require("koa-views");
 /** 错误处理中间件 */
 import error from "koa-json-error";
+/** 参数校验中间件 */
 import parameter from "koa-parameter";
-
 import MgDb from "./mongoose";
 MgDb.getInstance().connect();
 
