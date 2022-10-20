@@ -73,6 +73,10 @@ app.use(
 app.use(
   KoaBody({
     multipart: true,
+    formidable: {
+      uploadDir: path.join(__dirname, "/public/uploads"),
+      keepExtensions: true,
+    },
   })
 );
 /**应用级中间件 固定返回格式 */
