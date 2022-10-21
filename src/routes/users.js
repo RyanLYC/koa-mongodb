@@ -31,5 +31,11 @@ router.put("/follow/:id", auth, checkUserExist, follow);
 router.delete("/follow/:id", auth, checkUserExist, unfollow);
 // 获取粉丝接口
 router.get("/:id/followers", listFollowers);
+// 话题接口
+router.get("/:id/followingTopics", listFollowingTopics);
+// 关注话题接口
+router.put("/followingTopics/:id", auth, checkTopicExist, followTopic);
+// 取消关注话题接口
+router.delete("/followingTopics/:id", auth, checkTopicExist, unfollowTopic);
 
 module.exports = router;

@@ -202,6 +202,50 @@ class UserCtl {
       data: users,
     };
   }
+
+  // 获取话题关注接口
+  async listFollowingTopics(ctx) {
+    console.log(1);
+    const user = await User.findById(ctx.params.id)
+      .select("+followingTopics")
+      .populate("followingTopics");
+    if (!user) {
+      ctx.throw(404, "用户不存在d ");
+    }
+    ctx.body = user.followingTopics;
+  }
+
+  // 关注某人的话题接口
+  async followTopic(ctx) {
+    const me = await User.findById(ctx.state.user._id).select(
+      "+followingTopics"
+    );
+    if (
+      !me.followingTopics.map((id) => id.toString()).includes(ctx.params.id)
+    ) {
+      me.followingTopics.push(ctx.params.id);
+      // 保存到数据库
+      me.save();
+    }
+    ctx.status = 204;
+  }
+
+  // 取消关注话题
+  async unfollowTopic(ctx) {
+    const me = await User.findById(ctx.state.user._id).select(
+      "+followingTopics"
+    );
+    // 取消关注的人的索引
+    const index = me.followingTopics
+      .map((id) => id.toString())
+      .indexOf(ctx.params.id);
+    if (index > -1) {
+      me.followingTopics.splice(index, 1);
+      // 保存到数据库
+      me.save();
+    }
+    ctx.status = 204;
+  }
 }
 
 module.exports = new UserCtl();
