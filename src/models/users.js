@@ -30,7 +30,7 @@ const userSchema = new Schema({
     type: [
       {
         company: { type: Schema.Types.ObjectId, ref: "Topic" },
-        jog: { type: Schema.Types.ObjectId, ref: "Topic" },
+        job: { type: Schema.Types.ObjectId, ref: "Topic" },
       },
     ],
     select: false,

@@ -111,6 +111,97 @@ class UserCtl {
       data: "修改用户成功",
     };
   }
+
+  /**查询特定用户 */
+  async findById(ctx) {
+    // 根据用户输入想查询的字段来获取
+    // const { fields = "" } = ctx.query;
+    // const selectFields = fields
+    //   .split(";")
+    //   .filter((f) => f)
+    //   .map((f) => " +" + f)
+    //   .join("");
+    // // 动态获取query里传入的参数
+    // const populateStr = fields
+    //   .split(";")
+    //   .filter((f) => f)
+    //   .map((f) => {
+    //     if (f === "employments") {
+    //       return "employments.company employments.job";
+    //     }
+    //     if (f === "education") {
+    //       return "education.school education.major";
+    //     }
+    //     return f;
+    //   });
+    // 查询过滤了的字段
+    const selectFields =
+      "+locations +business +employments +educations +following +followingTopics";
+    const user = await User.findById(ctx.query.id)
+      .select(selectFields)
+      .populate(
+        "following followingTopics employments.company employments.job educations.school educations.major business"
+      );
+
+    if (!user) {
+      ctx.throw(404, "用户不存在");
+    }
+    ctx.state.response = {
+      code: RESPONSE_CODE.success,
+      data: user,
+    };
+  }
+
+  /**判断用户是否存在 中间件 */
+  async checkUserExist(ctx, next) {
+    const user = await User.findById(ctx.params.id);
+    if (!user) {
+      ctx.throw(404, "用户不存在");
+    }
+    await next();
+  }
+
+  /**关注某人接口 */
+  async follow(ctx) {
+    const me = await User.findById(ctx.state.user._id).select("+following");
+    if (!me.following.map((id) => id.toString()).includes(ctx.params.id)) {
+      me.following.push(ctx.params.id);
+      // 保存到数据库
+      me.save();
+    }
+    ctx.state.response = {
+      code: RESPONSE_CODE.success,
+      data: true,
+    };
+    // ctx.status = 204;
+  }
+  /**取消关注 */
+  async unfollow(ctx) {
+    const me = await User.findById(ctx.state.user._id).select("+following");
+    // 取消关注的人的索引
+    const index = me.following
+      .map((id) => id.toString())
+      .indexOf(ctx.params.id);
+    if (index > -1) {
+      me.following.splice(index, 1);
+      // 保存到数据库
+      me.save();
+    }
+    ctx.state.response = {
+      code: RESPONSE_CODE.success,
+      data: true,
+    };
+    // ctx.status = 204;
+  }
+
+  /**获取粉丝接口 */
+  async listFollowers(ctx) {
+    const users = await User.find({ following: ctx.params.id });
+    ctx.state.response = {
+      code: RESPONSE_CODE.success,
+      data: users,
+    };
+  }
 }
 
 module.exports = new UserCtl();

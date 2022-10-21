@@ -1,5 +1,16 @@
 import Router from "@koa/router";
-import { login, create, find, update, checkOwner } from "../controllers/users";
+import {
+  login,
+  create,
+  find,
+  update,
+  checkOwner,
+  findById,
+  checkUserExist,
+  follow,
+  unfollow,
+  listFollowers,
+} from "../controllers/users";
 import { auth } from "../utils/index";
 
 const router = new Router({ prefix: "/users" });
@@ -12,5 +23,13 @@ router.post("/create", create);
 router.get("/find", auth, find);
 // 查找用户 需要验证 token 需要自己才能更新自己
 router.post("/update", auth, checkOwner, update);
+// 查找特定用户
+router.get("/findById", findById);
+// 关注某人
+router.put("/follow/:id", auth, checkUserExist, follow);
+// 取消关注
+router.delete("/follow/:id", auth, checkUserExist, unfollow);
+// 获取粉丝接口
+router.get("/:id/followers", listFollowers);
 
 module.exports = router;
