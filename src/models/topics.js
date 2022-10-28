@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-// 解决 Mongoose 的 useFindAndModify 警告
-// mongoose.set('useFindAndModify', false)
 
 const { Schema, model } = mongoose;
 
