@@ -71,6 +71,33 @@ const userSchema = new Schema({
     ],
     select: false,
   },
+  listLikingAnswers: {
+    type: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Answer",
+      },
+    ],
+    select: false,
+  },
+  listDisLikingAnswers: {
+    type: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Answer",
+      },
+    ],
+    select: false,
+  },
+  listCollectAnswers: {
+    type: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Answer",
+      },
+    ],
+    select: false,
+  },
 });
 
 export default model("User", userSchema);
