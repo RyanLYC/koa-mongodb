@@ -4,6 +4,7 @@ import path from "path";
 import routing from "./routes";
 import { handleResponse, log, cors } from "./middleware";
 import KoaBody from "koa-body";
+import * as http from "http";
 // 第三方中间件
 const KoaStatic = require("koa-static");
 const views = require("koa-views");
@@ -16,6 +17,17 @@ import MgDb from "./mongoose";
 MgDb.getInstance().connect();
 
 const app = new Koa();
+
+const server = http.createServer(app.callback());
+const io = require("socket.io")(server);
+// https://blog.csdn.net/q465162770/article/details/101197776
+io.on("connection", function (socket) {
+  socket.on("sendMessage", (data) => {
+    data.id = socket.id;
+    //调用客户端事件
+    io.emit("receiveMessage", data);
+  });
+});
 app.use(cors);
 app.use(log());
 
