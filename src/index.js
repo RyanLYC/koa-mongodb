@@ -2,7 +2,7 @@ import Koa from "koa";
 import path from "path";
 // import Router from "@koa/router";
 import routing from "./routes";
-import { handleResponse, log } from "./middleware";
+import { handleResponse, log, cors } from "./middleware";
 import KoaBody from "koa-body";
 // 第三方中间件
 const KoaStatic = require("koa-static");
@@ -16,6 +16,9 @@ import MgDb from "./mongoose";
 MgDb.getInstance().connect();
 
 const app = new Koa();
+app.use(cors);
+app.use(log());
+
 // const router = new Router();
 // 静态资源的配置
 app.use(KoaStatic(path.join(__dirname, "/static")));
@@ -82,7 +85,6 @@ app.use(
 );
 /**应用级中间件 固定返回格式 */
 app.use(handleResponse());
-app.use(log());
 
 //中间件配置公共的信息
 app.use(async (ctx, next) => {
