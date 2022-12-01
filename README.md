@@ -1,5 +1,7 @@
-# koa2 + mongoDb5 + mongoose + jwt 的Demo
+# koa2 + mongoDb5 + mongoose + jwt 的Demo 
 
+* mongoDb5连接以及常用读写方法
+* 配置了log4js作为日志中间件
 
 
 # 规范目录结构
