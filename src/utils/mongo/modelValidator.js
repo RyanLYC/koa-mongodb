@@ -1,3 +1,4 @@
+// 待验证使用
 export const checkEmpty = (model, param) => {
   model.path(`${param}`).validate((val) => {
     if (val.length < 0 || val === " ") {
