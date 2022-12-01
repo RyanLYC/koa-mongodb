@@ -1,12 +1,12 @@
 import redisConnect from "./redisConnection";
-import getConfig from "../../config/index";
+import config from "../config";
 
 // https://blog.csdn.net/xfyxznu/article/details/123079197
 
 const env = process.env.NODE_ENV;
 let redisConfig = {
-  port: getConfig(env).port_redis,
-  host: getConfig(env).host_redis,
+  port: config.port_redis,
+  host: config.host_redis,
 };
 
 class RedisTool {
