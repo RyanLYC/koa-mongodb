@@ -1,1 +1,2 @@
-export * from './handleResponse'
+export * from "./handleResponse";
+export * from "./log";

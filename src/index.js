@@ -2,7 +2,7 @@ import Koa from "koa";
 import path from "path";
 // import Router from "@koa/router";
 import routing from "./routes";
-import { handleResponse } from "./middleware";
+import { handleResponse, log } from "./middleware";
 import KoaBody from "koa-body";
 // 第三方中间件
 const KoaStatic = require("koa-static");
@@ -11,6 +11,7 @@ const views = require("koa-views");
 import error from "koa-json-error";
 /** 参数校验中间件 */
 import parameter from "koa-parameter";
+import globalLogger from "./utils/globalLog";
 import MgDb from "./mongoose";
 MgDb.getInstance().connect();
 
@@ -81,6 +82,7 @@ app.use(
 );
 /**应用级中间件 固定返回格式 */
 app.use(handleResponse());
+app.use(log());
 
 //中间件配置公共的信息
 app.use(async (ctx, next) => {
@@ -90,5 +92,7 @@ app.use(async (ctx, next) => {
 
 app.use(parameter(app));
 routing(app);
+
+globalLogger();
 
 app.listen(3000, () => console.log("程序启动在3000端口"));

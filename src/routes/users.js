@@ -10,7 +10,11 @@ import {
   follow,
   unfollow,
   listFollowers,
+  listFollowingTopics,
+  followTopic,
+  unfollowTopic,
 } from "../controllers/users";
+import { checkTopicExist } from "../controllers/topics";
 import { auth } from "../utils/index";
 
 const router = new Router({ prefix: "/users" });
