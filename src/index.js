@@ -90,6 +90,7 @@ app.use(
   KoaBody({
     multipart: true,
     formidable: {
+      // maxFileSize: 200 * 1024 * 1024,
       uploadDir: path.join(__dirname, "/public/uploads"),
       keepExtensions: true,
     },
