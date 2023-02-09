@@ -20,6 +20,7 @@ class UploadSvc {
           file,
           fse.createWriteStream(dest, {
             start: index * size,
+            // flags: "a", // https://www.jianshu.com/p/0806008d175d
             end: (index + 1) * size,
           })
         )
@@ -37,41 +38,14 @@ class UploadSvc {
 
     /**appendFileSync 合并 */
     chunkPaths.map((chunkPath) => {
-      // 合并文件
       fse.appendFileSync(filePath, fse.readFileSync(chunkPath));
     });
 
-    // 删除文件夹
-    fse.remove(chunkDir);
-
-    /** 流合并 该写法有问题 应该要用callBack的写法才保证合并顺序*/
+    /** 流合并 windows 合并有问题*/
     // await this.mergeFiles(chunkPaths, filePath, size);
 
-    // 参考函数
-    //   function mergeChunks(fileName, chunks, callback) {
-    //     console.log('chunks:' + chunks);
-    //     let chunkPaths = chunks.map(function (name) {
-    //         return path.join(process.env.IMAGESDIR, name)
-    //     });
-
-    //     // 采用Stream方式合并
-    //     let targetStream = fs.createWriteStream(path.join(process.env.IMAGESDIR, fileName));
-    //     const readStream = function (chunkArray, cb) {
-    //         let path = chunkArray.shift();
-    //         let originStream = fs.createReadStream(path);
-    //         originStream.pipe(targetStream, {end: false});
-    //         originStream.on("end", function () {
-    //             // 删除文件
-    //             fs.unlinkSync(path);
-    //             if (chunkArray.length > 0) {
-    //                 readStream(chunkArray, callback)
-    //             } else {
-    //                 cb()
-    //             }
-    //         });
-    //     };
-    //     readStream(chunkPaths, callback);
-    // }
+    // 删除文件夹
+    fse.remove(chunkDir);
   }
 }
 module.exports = new UploadSvc();
