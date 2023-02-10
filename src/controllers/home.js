@@ -73,9 +73,12 @@ class HomeCtl {
       const dirPath = path.resolve(UPLOAD_DIR, hash);
       // 文件没有完全上传完毕，但是可能存在部分切片上传完毕了
       uploadedList = (await fse.existsSync(dirPath))
-        ? (await fse.readdir(dirPath)).filter((name) => name[0] !== ".") // 过滤诡异的隐藏文件 比如.DS_store
+        ? (await fse.readdir(dirPath)).filter(
+            (name) => name.split(".")[0] !== "."
+          ) // 过滤诡异的隐藏文件 比如.****
         : [];
     }
+
     ctx.state.response = {
       code: RESPONSE_CODE.success,
       msg: "合并成功",
