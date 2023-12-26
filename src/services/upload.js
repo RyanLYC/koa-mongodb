@@ -1,30 +1,40 @@
 const path = require("path");
 const fse = require("fs-extra");
+import { pipeline } from "stream/promises";
 
 class UploadSvc {
   async mergeFiles(files, dest, size) {
-    const pipeStream = (filePath, writeStream) =>
-      new Promise((resolve) => {
-        const readStream = fse.createReadStream(filePath);
-        readStream.on("end", () => {
-          // 删除文件
-          fse.unlinkSync(filePath);
-          resolve();
-        });
-        readStream.pipe(writeStream);
-      });
+    const pipeStream = (filePath, writeStream) => {
+      const readStream = fse.createReadStream(filePath);
+      return pipeline(readStream, writeStream);
+    };
+    // new Promise((resolve) => {
+    //   const readStream = fse.createReadStream(filePath);
+    //   readStream
+    //     .on("finish", () => {
+    //       // 删除文件
+    //       fse.unlinkSync(filePath);
+    //       resolve();
+    //     })
+    //     .on("error", () => {
+    //       console.log("error");
+    //     });
+
+    //   readStream.pipe(writeStream);
+    // });
 
     await Promise.all(
-      files.map((file, index) =>
+      files.map((file, index) => {
+        const start = index * size;
+        const end = (index + 1) * size;
         pipeStream(
           file,
           fse.createWriteStream(dest, {
-            start: index * size,
-            // flags: "a", // https://www.jianshu.com/p/0806008d175d
-            end: (index + 1) * size,
+            start,
+            end,
           })
-        )
-      )
+        );
+      })
     );
   }
 
@@ -42,7 +52,7 @@ class UploadSvc {
     });
 
     /** 流合并 windows 合并有问题*/
-    // await this.mergeFiles(chunkPaths, filePath, size);
+    await this.mergeFiles(chunkPaths, filePath, size);
 
     // 删除文件夹
     fse.remove(chunkDir);
